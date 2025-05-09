@@ -1,0 +1,16 @@
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/obj/Debug/net9.0/Infrastructure.csproj.AssemblyReference.cache
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/obj/Debug/net9.0/Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/obj/Debug/net9.0/Infrastructure.AssemblyInfoInputs.cache
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/obj/Debug/net9.0/Infrastructure.AssemblyInfo.cs
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/obj/Debug/net9.0/Infrastructure.csproj.CoreCompileInputs.cache
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/obj/Debug/net9.0/Infrastructure.sourcelink.json
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/bin/Debug/net9.0/Infrastructure.deps.json
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/bin/Debug/net9.0/Infrastructure.dll
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/bin/Debug/net9.0/Infrastructure.pdb
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/bin/Debug/net9.0/Core.dll
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/bin/Debug/net9.0/Core.pdb
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/obj/Debug/net9.0/Infrastr.15EFFBFE.Up2Date
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/obj/Debug/net9.0/Infrastructure.dll
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/obj/Debug/net9.0/refint/Infrastructure.dll
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/obj/Debug/net9.0/Infrastructure.pdb
+/Users/hernan/Desktop/GestionComprasInventario/Infrastructure/obj/Debug/net9.0/ref/Infrastructure.dll
