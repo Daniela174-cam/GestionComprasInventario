@@ -1,7 +1,12 @@
 using Npgsql;
 using Microsoft.Extensions.Configuration;
 using System.IO;
-
+using Infrastructure;
+using Core.Entities;
+using Core.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 namespace Infrastructure
 {
     public static class DBContext
@@ -12,7 +17,7 @@ namespace Infrastructure
         public static NpgsqlConnection GetConnection()
         {
             if (_connection == null)
-            {
+            {   
                 lock (_lock)
                 {
                     if (_connection == null)

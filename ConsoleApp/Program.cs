@@ -30,8 +30,9 @@ class Program
             {
                 case "1":
                     var compra = new Compra();
-                    Console.Write("ID proveedor: "); compra.ProveedorId = Console.ReadLine();
-                    Console.Write("ID empleado: "); compra.EmpleadoId = Console.ReadLine();
+                    Console.Write("ID proveedor: "); compra.ProveedorId = int.Parse(Console.ReadLine());
+                    Console.Write("ID empleado: "); compra.EmpleadoId = int.Parse(Console.ReadLine());
+
                     Console.Write("Documento ref: "); compra.DocumentoReferencia = Console.ReadLine();
                     compra.Fecha = DateTime.Now;
 
@@ -41,10 +42,11 @@ class Program
                     for (int i = 0; i < cantidad; i++)
                     {
                         var detalle = new DetalleCompra();
-                        Console.Write($"ID producto #{i + 1}: "); detalle.ProductoId = Console.ReadLine();
-                        Console.Write($"Cantidad: "); detalle.Cantidad = int.Parse(Console.ReadLine());
-                        Console.Write($"Valor unitario: "); detalle.ValorUnitario = decimal.Parse(Console.ReadLine());
-                        compra.Detalles.Add(detalle);
+Console.Write($"ID producto #{i + 1}: "); detalle.ProductoId = Console.ReadLine(); // <-- corregido
+Console.Write($"Cantidad: "); detalle.Cantidad = int.Parse(Console.ReadLine());
+Console.Write($"Valor unitario: "); detalle.ValorUnitario = decimal.Parse(Console.ReadLine());
+compra.Detalles.Add(detalle);
+
                     }
 
                     await compraRepo.AddAsync(compra);
@@ -84,24 +86,60 @@ class Program
 
                 case "5":
                     var plan = new PlanPromocional();
-                    Console.Write("Nombre del plan: "); plan.Nombre = Console.ReadLine();
-                    Console.Write("Fecha inicio (yyyy-mm-dd): "); plan.FechaInicio = DateTime.Parse(Console.ReadLine());
-                    Console.Write("Fecha fin (yyyy-mm-dd): "); plan.FechaFin = DateTime.Parse(Console.ReadLine());
-                    Console.Write("Descuento (%): "); plan.Descuento = decimal.Parse(Console.ReadLine());
+
+                    Console.Write("Nombre del plan: ");
+                    plan.Nombre = Console.ReadLine() ?? "Sin nombre";
+
+                    Console.Write("Fecha inicio (yyyy-mm-dd): ");
+                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime fechaInicio))
+                    {
+                        Console.WriteLine("❌ Fecha inválida.");
+                        break;
+                    }
+                    plan.FechaInicio = fechaInicio;
+
+                    Console.Write("Fecha fin (yyyy-mm-dd): ");
+                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime fechaFin))
+                    {
+                        Console.WriteLine("❌ Fecha inválida.");
+                        break;
+                    }
+                    plan.FechaFin = fechaFin;
+
+                    Console.Write("Descuento (%): ");
+                    if (!decimal.TryParse(Console.ReadLine(), out decimal descuento))
+                    {
+                        Console.WriteLine("❌ Descuento inválido.");
+                        break;
+                    }
+                    plan.Descuento = descuento;
 
                     Console.Write("¿Cuántos productos tendrá el plan?: ");
-                    int cantidadProd = int.Parse(Console.ReadLine());
+                    if (!int.TryParse(Console.ReadLine(), out int cantidadProd))
+                    {
+                        Console.WriteLine("❌ Cantidad inválida.");
+                        break;
+                    }
 
                     for (int i = 0; i < cantidadProd; i++)
                     {
                         Console.Write($"ID producto #{i + 1}: ");
-                        var idProd = Console.ReadLine();
+                        string? input = Console.ReadLine();
+
+                        if (!int.TryParse(input, out int idProd))
+                        {
+                            Console.WriteLine("❌ ID inválido. Debe ser un número.");
+                            i--;
+                            continue;
+                        }
+
                         plan.Productos.Add(new PlanProducto { ProductoId = idProd });
                     }
 
                     await planRepo.CrearAsync(plan);
                     Console.WriteLine("\n✅ Plan promocional creado correctamente.");
                     break;
+
 
                 case "6":
                     Console.Write("Fecha para consultar (yyyy-mm-dd): ");
@@ -131,7 +169,7 @@ class Program
                     for (int i = 0; i < cantidadVenta; i++)
                     {
                         var detalle = new DetalleVenta();
-                        Console.Write($"ID producto #{i + 1}: "); detalle.ProductoId = Console.ReadLine();
+                        Console.Write($"ID producto #{i + 1}: "); detalle.ProductoId = Console.ReadLine() ?? "";
                         Console.Write("Cantidad: "); detalle.Cantidad = int.Parse(Console.ReadLine());
                         Console.Write("Valor unitario: "); detalle.ValorUnitario = decimal.Parse(Console.ReadLine());
                         totalVenta += detalle.Cantidad * detalle.ValorUnitario;
@@ -142,12 +180,12 @@ class Program
                     await ventaRepo.AddAsync(venta);
                     Console.WriteLine("✅ Venta registrada y stock actualizado.");
 
-                    // Registrar movimiento de caja tipo Entrada
+
                     try
                     {
                         var movimiento = MovimientoFactory.CrearMovimiento(
                             "Entrada",
-                            tipoMovimientoId: 1, // Asumiendo que '1' es Entrada por venta
+                            tipoMovimientoId: 1,
                             valor: totalVenta,
                             concepto: $"Venta registrada: {venta.DocumentoReferencia}",
                             terceroId: venta.ClienteId

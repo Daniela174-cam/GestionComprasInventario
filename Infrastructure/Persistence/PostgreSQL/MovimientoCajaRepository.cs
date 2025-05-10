@@ -19,10 +19,12 @@ namespace Infrastructure.Persistence.PostgreSQL
         public async Task RegistrarAsync(MovimientoCaja movimiento)
         {
             var query = @"
-                INSERT INTO MovCaja (fecha, tipoMov_id, valor, concepto, tercero_id)
-                VALUES (@fecha, @tipo, @valor, @concepto, @tercero)";
+        INSERT INTO MovCaja (fecha, tipoMov_id, valor, concepto, tercero_id)
+        VALUES (@fecha, @tipo, @valor, @concepto, @tercero)";
 
-            await _connection.OpenAsync();
+            if (_connection.State != System.Data.ConnectionState.Open)
+                await _connection.OpenAsync();
+
             using var cmd = new NpgsqlCommand(query, _connection);
             cmd.Parameters.AddWithValue("@fecha", movimiento.Fecha);
             cmd.Parameters.AddWithValue("@tipo", movimiento.TipoMovimientoId);
@@ -30,8 +32,11 @@ namespace Infrastructure.Persistence.PostgreSQL
             cmd.Parameters.AddWithValue("@concepto", movimiento.Concepto);
             cmd.Parameters.AddWithValue("@tercero", movimiento.TerceroId);
             await cmd.ExecuteNonQueryAsync();
-            await _connection.CloseAsync();
+
+            if (_connection.State == System.Data.ConnectionState.Open)
+                await _connection.CloseAsync();
         }
+
 
         public async Task<List<MovimientoCaja>> ObtenerPorFechaAsync(DateTime fecha)
         {
