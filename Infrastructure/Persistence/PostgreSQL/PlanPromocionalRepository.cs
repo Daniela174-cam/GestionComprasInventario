@@ -20,7 +20,7 @@ namespace Infrastructure.Persistence.PostgreSQL
         {
             await _connection.OpenAsync();
 
-            // Insertar en Planes
+            
             var insertPlan = new NpgsqlCommand(@"
                 INSERT INTO Planes (nombre, fechainicio, fechafin, dcto)
                 VALUES (@nombre, @inicio, @fin, @descuento)
@@ -33,7 +33,7 @@ namespace Infrastructure.Persistence.PostgreSQL
 
             int planId = (int)await insertPlan.ExecuteScalarAsync();
 
-            // Insertar en PlanProducto
+            
             foreach (var producto in plan.Productos)
             {
                 var insertProducto = new NpgsqlCommand(@"

@@ -42,7 +42,7 @@ class Program
                     for (int i = 0; i < cantidad; i++)
                     {
                         var detalle = new DetalleCompra();
-Console.Write($"ID producto #{i + 1}: "); detalle.ProductoId = Console.ReadLine(); // <-- corregido
+Console.Write($"ID producto #{i + 1}: "); detalle.ProductoId = Console.ReadLine();  
 Console.Write($"Cantidad: "); detalle.Cantidad = int.Parse(Console.ReadLine());
 Console.Write($"Valor unitario: "); detalle.ValorUnitario = decimal.Parse(Console.ReadLine());
 compra.Detalles.Add(detalle);
